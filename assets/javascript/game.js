@@ -29,3 +29,28 @@
         //make a for loop to iterate currentWord.length times to generate a string with  -
         //set dashCount to the new word length generated
         //change the picture using 
+var computerChoices = ["loved", "circles", "panini"];
+var currentWord = computerChoices[Math.floor(Math.random()*computerChoices.length)];
+var numOfGuesses = 12;
+var wins = 0;
+var losses = 0;
+var dashCount = currentWord.length;
+var computerGuess = document.getElementById("currentWord");
+var guessesText = document.getElementById("numOfGuess");
+var winsText = document.getElementById("wins");
+var lossesText = document.getElementById("losses");
+var userText = document.getElementById("user-guess");
+var userPastGuess = "";
+var dashPrint = "";     
+
+winsText.textContent = "Wins : " + wins;
+lossesText.textContent = "Losses : " + losses;
+guessesText.textContent = "Guesses Left : " + numOfGuesses;
+userText.textContent = "Your Guesses so far : " + userPastGuess;
+
+console.log(currentWord);
+for(var i = 0; i< dashCount; i++){
+
+    dashPrint = dashPrint +" - ";
+}
+computerGuess.textContent = dashPrint;
