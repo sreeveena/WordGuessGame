@@ -43,13 +43,14 @@ var userText = document.getElementById("user-guess");
 var userGuess = "";
 var dashPrint = ""; 
 var dashPrint1 = "";    
+var remainingDashes= dashCount;
 
 winsText.textContent = "Wins : " + wins;
 lossesText.textContent = "Losses : " + losses;
 guessesText.textContent = "Guesses Left : " + numOfGuesses;
 userText.textContent = "Your Guesses so far : " + userGuess;
 
-console.log(currentWord);
+//console.log(currentWord);
 for(var i = 0; i< dashCount; i++){
 
     dashPrint = dashPrint +" - ";
@@ -59,8 +60,13 @@ computerGuess.textContent = dashPrint;
 function setDefault(){
     userGuess = "";
     numOfGuesses = 12;
+    dashPrint = "";
     currentWord = computerChoices[Math.floor(Math.random()*computerChoices.length)];
     dashCount = currentWord.length;
+    for(var i = 0; i< dashCount; i++){
+
+        dashPrint = dashPrint +" - ";
+    }
 };
 
 document.onkeyup = function(event){
@@ -90,7 +96,7 @@ document.onkeyup = function(event){
             for (var j = 0; j < dashCount; j ++) {
                 if (j == i) {
                     dashPrint1 = dashPrint1 + " " + presentLetter + " ";
-                   
+                   remainingDashes--;
                    
                 } else {
                   dashPrint1 = dashPrint1 + dashPrint.substr(j*3,3);
@@ -112,9 +118,11 @@ document.onkeyup = function(event){
         losses++;
 
      }
-    if(dashCount == 0){
+    if(remainingDashes == 0){
         setDefault();
         wins++;
+        document.getElementById("myAudio").play();
+        document.getElementById("image").src="assets/images/circles.jpg";
 
     }
     computerGuess.textContent = dashPrint;
