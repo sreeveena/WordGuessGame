@@ -40,13 +40,14 @@ var guessesText = document.getElementById("numOfGuess");
 var winsText = document.getElementById("wins");
 var lossesText = document.getElementById("losses");
 var userText = document.getElementById("user-guess");
-var userPastGuess = "";
-var dashPrint = "";     
+var userGuess = "";
+var dashPrint = ""; 
+var dashPrint1 = "";    
 
 winsText.textContent = "Wins : " + wins;
 lossesText.textContent = "Losses : " + losses;
 guessesText.textContent = "Guesses Left : " + numOfGuesses;
-userText.textContent = "Your Guesses so far : " + userPastGuess;
+userText.textContent = "Your Guesses so far : " + userGuess;
 
 console.log(currentWord);
 for(var i = 0; i< dashCount; i++){
@@ -54,3 +55,72 @@ for(var i = 0; i< dashCount; i++){
     dashPrint = dashPrint +" - ";
 }
 computerGuess.textContent = dashPrint;
+
+function setDefault(){
+    userGuess = "";
+    numOfGuesses = 12;
+    currentWord = computerChoices[Math.floor(Math.random()*computerChoices.length)];
+    dashCount = currentWord.length;
+};
+
+document.onkeyup = function(event){
+
+   var presentLetter = event.key;
+    presentLetter = presentLetter.toLowerCase();
+// console.log(presentLetter);
+// console.log(userGuess);
+    if(userGuess == ""){
+        // console.log(userGuess);
+        userGuess = presentLetter;
+        // console.log(userGuess);
+    }else {
+        if(userGuess.includes(presentLetter)){
+       return;
+        }else{
+        userGuess = userGuess +" , "+ presentLetter;
+        // console.log(userGuess);
+        } 
+    }
+    
+     for(var i = 0; i< dashCount; i++){
+
+        if(presentLetter == currentWord[i]){
+            var str = dashPrint;
+            dashPrint1 = "";
+            for (var j = 0; j < dashCount; j ++) {
+                if (j == i) {
+                    dashPrint1 = dashPrint1 + " " + presentLetter + " ";
+                   
+                   
+                } else {
+                  dashPrint1 = dashPrint1 + dashPrint.substr(j*3,3);
+                  
+                }
+            }
+            dashPrint = dashPrint1;
+            // console.log(dashPrint);
+            console.log(dashCount);
+           
+           
+        }
+    }
+    numOfGuesses--;
+
+    // console.log(numOfGuesses);
+    if(numOfGuesses == 0){
+        setDefault();
+        losses++;
+
+     }
+    if(dashCount == 0){
+        setDefault();
+        wins++;
+
+    }
+    computerGuess.textContent = dashPrint;
+    winsText.textContent = "Wins : " + wins;
+    lossesText.textContent = "Losses : " + losses;
+    guessesText.textContent = "Guesses Left : " + numOfGuesses;
+    userText.textContent = "Your Guesses so far : " + userGuess;
+
+}
